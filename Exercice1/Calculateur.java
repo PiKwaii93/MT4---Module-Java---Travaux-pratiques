@@ -1,3 +1,5 @@
+package Exercice1;
+
 public class Calculateur {
 
     public static void main(String[] args) {
