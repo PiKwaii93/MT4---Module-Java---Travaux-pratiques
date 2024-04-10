@@ -1,5 +1,3 @@
-package Exercice2;
-
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -56,45 +54,44 @@ public class FileProcessor {
                     try {
                         param1 = Double.parseDouble(elements[0]);
                         param2 = Double.parseDouble(elements[1]);
+                        String operation = elements[2];
+
+                        double resultat = 0;
+                        switch (operation) {
+                            case "+":
+                                resultat = param1 + param2;
+                                break;
+                            case "-":
+                                resultat = param1 - param2;
+                                break;
+                            case "*":
+                                resultat = param1 * param2;
+                                break;
+                            case "/":
+                                if (param2 == 0) {
+                                    System.out.println("Erreur : Division par zéro.");
+                                    return;
+                                }
+                                resultat = param1 / param2;
+                                break;
+                            case "%":
+                                if (param2 == 0) {
+                                    System.out.println("Erreur : Modulo par zéro.");
+                                    return;
+                                }
+                                resultat = param1 % param2;
+                                break;
+                            default:
+                                System.out.println("Erreur : Opérateur non reconnu.");
+                                return;
+                        }
+
+                        writer.write(Double.toString(resultat));
+                        writer.newLine();
                     } catch (NumberFormatException e) {
                         writer.write("Erreur : Les deux premiers paramètres doivent être des nombres.");
-                        return;
+                        writer.newLine();
                     }
-            
-                    String operation = elements[2];
-
-                    double resultat = 0;
-                    switch (operation) {
-                        case "+":
-                            resultat = param1 + param2;
-                            break;
-                        case "-":
-                            resultat = param1 - param2;
-                            break;
-                        case "*":
-                            resultat = param1 * param2;
-                            break;
-                        case "/":
-                            if (param2 == 0) {
-                                System.out.println("Erreur : Division par zéro.");
-                                return;
-                            }
-                            resultat = param1 / param2;
-                            break;
-                        case "%":
-                            if (param2 == 0) {
-                                System.out.println("Erreur : Modulo par zéro.");
-                                return;
-                            }
-                            resultat = param1 % param2;
-                            break;
-                        default:
-                            System.out.println("Erreur : Opérateur non reconnu.");
-                            return;
-                    }
-
-                    writer.write(Double.toString(resultat));
-                    writer.newLine();
             }
         } catch (IOException e) {
             e.printStackTrace();
