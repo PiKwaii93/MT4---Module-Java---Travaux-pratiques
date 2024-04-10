@@ -1,31 +1,51 @@
+import java.io.*;
+
 public class Calculateur {
     public static void main(String[] args) {
-        if (args.length != 3) {
-            System.out.println("Erreur : Vous devez fournir exactement trois paramètres.");
+        if (!validerArguments(args)) {
             return;
         }
 
-        double param1, param2;
-        try {
-            param1 = Double.parseDouble(args[0]);
-            param2 = Double.parseDouble(args[1]);
-        } catch (NumberFormatException e) {
-            System.out.println("Erreur : Les deux premiers paramètres doivent être des nombres.");
+        String dossier = args[0];
+        if (!verifierDossier(dossier)) {
             return;
         }
 
-        String operation = args[2];
+        traiterFichiers(new File(dossier));
+    }
 
-        if (operation.equals("-") || operation.equals("+") || operation.equals("x") || operation.equals("/") || operation.equals("%")) {
-            try {
-                Operation op = OperationFactory.createOperation(operation);
-                double result = op.apply(param1, param2);
-                System.out.println("Resultat: " + result);
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
+    private static boolean validerArguments(String[] args) {
+        if (args.length != 1) {
+            System.out.println("Utilisation: java Calculateur <dossier>");
+            return false;
+        }
+        return true;
+    }
+
+    private static boolean verifierDossier(String dossier) {
+        File dossierFichiers = new File(dossier);
+        if (!dossierFichiers.exists() || !dossierFichiers.isDirectory()) {
+            System.err.println("Le dossier spécifié n'existe pas.");
+            return false;
+        }
+        return true;
+    }
+
+    private static void traiterFichiers(File dossier) {
+        File[] fichiers = dossier.listFiles();
+        if (fichiers == null || fichiers.length == 0) {
+            System.err.println("Le dossier spécifié est vide.");
+            return;
+        }
+
+        for (File fichier : fichiers) {
+            if (fichier.isFile() && fichier.getName().endsWith(".op")) {
+                try {
+                    GestionnaireFichier.traiterFichier(fichier);
+                } catch (IOException e) {
+                    System.err.println("Erreur lors du traitement du fichier " + fichier.getName() + ": " + e.getMessage());
+                }
             }
-        } else {
-            System.out.println("Erreur : Le troisième paramètre doit être '+', '-', '*', '/' ou '%'.");
         }
     }
 }
