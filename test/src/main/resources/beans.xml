@@ -1,0 +1,11 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+    <!-- Bean pour le composant de lecture -->
+    <bean id="reader" class="com.example.Reader">
+        <!-- Propriété pour spécifier l'implémentation (FileSystem par défaut) -->
+        <property name="implementation" value="fileSystem"/>
+    </bean>
+</beans>

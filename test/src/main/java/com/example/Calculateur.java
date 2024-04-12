@@ -1,7 +1,10 @@
 package com.example;
 
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
 import java.io.BufferedWriter;
-import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.File;
@@ -10,9 +13,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.io.FileReader;
-import java.util.List;
-import java.util.ArrayList;
 
 
 
@@ -41,7 +41,9 @@ public class Calculateur {
 
         if (dossier.equals("bdd")) {
             // Traitement pour la récupération des données depuis la base de données
-            recupererDonneesDepuisBDD();
+            ApplicationContext context = new ClassPathXmlApplicationContext("beans.xml");
+            Reader reader = (Reader) context.getBean("reader");
+            reader.read();
         } else {
             // Traitement pour le traitement des fichiers dans un dossier spécifié
             traiterFichiers(new File(dossier));
@@ -88,7 +90,7 @@ public class Calculateur {
             ResultSet rs = stmt.executeQuery();
     
             // Chemin du dossier de sortie pour les fichiers
-            String dossierSortie = "test/src/main/resources/bdd/";
+            String dossierSortie = "src/main/resources/bdd/";
     
             // Création du dossier de sortie s'il n'existe pas
             File dossierBDD = new File(dossierSortie);
