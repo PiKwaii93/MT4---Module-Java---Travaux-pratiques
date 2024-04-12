@@ -1,18 +1,18 @@
 public class OperationFactory {
-    public static Operation createOperation(String operation) {
-        switch (operation) {
+    public static Operation creerOperation(String operateur) {
+        switch (operateur) {
             case "+":
                 return new Addition();
             case "-":
                 return new Soustraction();
-            case "x":
+            case "*":
                 return new Multiplication();
             case "/":
                 return new Division();
             case "%":
                 return new Modulo();
             default:
-                throw new IllegalArgumentException("Erreur : Opérateur non reconnu.");
+                throw new IllegalArgumentException("Opérateur non reconnu : " + operateur);
         }
     }
 }

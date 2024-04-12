@@ -1,7 +1,8 @@
 public class Modulo implements Operation {
-    public double apply(double param1, double param2) {
+    public double calculer(double param1, double param2) {
         if (param2 == 0) {
-            throw new ArithmeticException("Erreur : Modulo par zéro.");
+            System.out.println("Erreur : Modulo par zéro.");
+            return Double.NaN;
         }
         return param1 % param2;
     }
